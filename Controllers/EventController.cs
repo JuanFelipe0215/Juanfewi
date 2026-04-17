@@ -17,7 +17,7 @@ public class EventController : Controller
     public IActionResult Index()
     {
         var events = _context.Events.ToList(); 
-        return View();
+        return View(events);
     }
 
     public IActionResult Create()
