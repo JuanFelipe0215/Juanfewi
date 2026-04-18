@@ -1,62 +1,126 @@
 @model IEnumerable<Juanfewi.Models.Event>
 
 @{
-    ViewData["Title"] = "Panel de Eventos";
-    var totalEvents = Model.Count();
-    var activeEvents = Model.Count(e => e.IsActive);
-    var inactiveEvents = Model.Count(e => !e.IsActive);
+    ViewData["Title"] = "Panel Gamer";
+    ViewData["ActiveNav"] = "index";
+    var total    = Model.Count();
+    var active   = Model.Count(e => e.IsActive);
+    var inactive = Model.Count(e => !e.IsActive);
 }
 
-<div class="section">
-    <div class="card-panel z-depth-3 hero-panel">
-        <div class="row valign-wrapper" style="margin-bottom: 0;">
-            <div class="col s12 m8">
-                <h3 class="white-text" style="margin-top: 0; font-weight: 700;">
-                    Panel de Gestión Gamer
-                </h3>
-                <p class="grey-text text-lighten-3 flow-text" style="margin-bottom: 0;">
-                    Administra torneos, eventos y experiencias gaming desde un solo lugar.
-                </p>
-            </div>
-
-            <div class="col s12 m4 right-align" style="margin-top: 20px;">
-                <a asp-action="Create" class="btn-large waves-effect waves-light deep-purple lighten-1">
-                    <i class="material-icons left">add_circle</i>
-                    Crear Evento
-                </a>
-            </div>
+<!-- HERO -->
+<div class="pf-hero pf-animate">
+    <div>
+        <div class="pf-hero__eyebrow">Panel de Gestión</div>
+        <h1 class="pf-hero__title">GAMER<br>COMMAND</h1>
+        <p class="pf-hero__sub">Administra torneos, eventos y experiencias gaming desde un solo cuartel general.</p>
+        <div class="pf-hero__actions">
+            <a asp-action="Create" class="btn-pf-primary">⚡ Crear Evento</a>
+        </div>
+    </div>
+    <div class="pf-hero__badges">
+        <div class="pf-hero__badge pf-hero__badge--green">
+            <span class="pf-hero__badge-num pf-hero__badge-num--green">@total</span>
+            <span class="pf-hero__badge-label">Eventos</span>
+        </div>
+        <div class="pf-hero__badge pf-hero__badge--purple">
+            <span class="pf-hero__badge-num pf-hero__badge-num--purple">@active</span>
+            <span class="pf-hero__badge-label">Activos</span>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col s12 m4">
-        <div class="card summary-card blue-grey darken-3 hoverable">
-            <div class="card-content white-text center">
-                <i class="material-icons medium">event</i>
-                <span class="card-title">Total</span>
-                <h4>@totalEvents</h4>
-            </div>
+<!-- STATS -->
+<div class="pf-stats pf-animate--d1">
+    <div class="pf-stat pf-stat--blue">
+        <div class="pf-stat__glow"></div>
+        <div class="pf-stat__icon">📅</div>
+        <div class="pf-stat__label">Total Eventos</div>
+        <div class="pf-stat__num">@total</div>
+    </div>
+    <div class="pf-stat pf-stat--green">
+        <div class="pf-stat__glow"></div>
+        <div class="pf-stat__icon">✅</div>
+        <div class="pf-stat__label">Activos</div>
+        <div class="pf-stat__num">@active</div>
+    </div>
+    <div class="pf-stat pf-stat--orange">
+        <div class="pf-stat__glow"></div>
+        <div class="pf-stat__icon">⏸</div>
+        <div class="pf-stat__label">Inactivos</div>
+        <div class="pf-stat__num">@inactive</div>
+    </div>
+</div>
+
+<!-- TABLE -->
+<div class="pf-card pf-animate--d2">
+    <div class="pf-card__header">
+        <div>
+            <div class="pf-card__title">LISTA DE EVENTOS</div>
+            <div class="pf-card__subtitle">Visualiza, edita o elimina tus eventos</div>
         </div>
+        <a asp-action="Create" class="btn-pf-primary btn-pf-sm">+ NUEVO</a>
     </div>
 
-    <div class="col s12 m4">
-        <div class="card summary-card green darken-2 hoverable">
-            <div class="card-content white-text center">
-                <i class="material-icons medium">check_circle</i>
-                <span class="card-title">Activos</span>
-                <h4>@activeEvents</h4>
-            </div>
+    @if (!Model.Any())
+    {
+        <div class="pf-empty">
+            <span class="pf-empty__icon">🎮</span>
+            <div class="pf-empty__title">SIN EVENTOS</div>
+            <p class="pf-empty__text">No hay eventos registrados todavía. ¡Crea el primero!</p>
+            <a asp-action="Create" class="btn-pf-primary">⚡ Crear Evento</a>
         </div>
-    </div>
-
-    <div class="col s12 m4">
-        <div class="card summary-card red darken-2 hoverable">
-            <div class="card-content white-text center">
-                <i class="material-icons medium">cancel</i>
-                <span class="card-title">Inactivos</span>
-                <h4>@inactiveEvents</h4>
-            </div>
+    }
+    else
+    {
+        <div style="overflow-x:auto;">
+            <table class="pf-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Fecha</th>
+                        <th>Ubicación</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ev in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="pf-table__name">@ev.Name</span>
+                                <span class="pf-table__id">ID #@ev.Id</span>
+                            </td>
+                            <td><span class="pf-badge pf-badge--cat">@ev.Category</span></td>
+                            <td>@ev.Date.ToString("dd MMM yyyy")</td>
+                            <td>📍 @ev.Location</td>
+                            <td>
+                                @if (ev.IsActive)
+                                {
+                                    <span class="pf-badge pf-badge--active">Activo</span>
+                                }
+                                else
+                                {
+                                    <span class="pf-badge pf-badge--inactive">Inactivo</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="pf-actions">
+                                    <a asp-action="Show" asp-route-id="@ev.Id"
+                                       class="pf-icon-btn pf-icon-btn--view" title="Ver">👁</a>
+                                    <a asp-action="Edit" asp-route-id="@ev.Id"
+                                       class="pf-icon-btn pf-icon-btn--edit" title="Editar">✏️</a>
+                                    <a asp-action="Destroy" asp-route-id="@ev.Id"
+                                       class="pf-icon-btn pf-icon-btn--delete" title="Eliminar"
+                                       onclick="return confirm('¿Eliminar el evento @ev.Name?')">🗑</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-    </div>
+    }
 </div>
