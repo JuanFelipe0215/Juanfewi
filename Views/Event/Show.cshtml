@@ -1,0 +1,206 @@
+@model Juanfewi.Models.Event
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+
+<div class="flex items-center justify-between flex-wrap gap-4 mb-8 animate-slide-in">
+    <div>
+        <div class="font-orbitron text-[0.63rem] font-bold tracking-[4px] uppercase text-game-blue mb-2
+                    flex items-center gap-2">
+            <span class="block w-6 h-0.5 bg-game-blue shadow-[0_0_8px_#0ea5e9]"></span>
+            Detalle del Evento
+        </div>
+        <h1 class="font-orbitron font-black text-[1.9rem] text-gradient-blue">@Model.Name.ToUpper()</h1>
+    </div>
+    <div class="flex gap-3 flex-wrap">
+        <a asp-action="Edit" asp-route-id="@Model.Id"
+           class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+                  px-6 py-3 rounded-xl bg-gradient-to-r from-game-purple to-game-violet text-white no-underline
+                  shadow-[0_4px_20px_rgba(124,58,237,0.3)] transition-all duration-200
+                  hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(124,58,237,0.5)]">
+            <i data-lucide="pencil" class="w-4 h-4"></i>
+            Editar
+        </a>
+        <a asp-action="Destroy" asp-route-id="@Model.Id"
+           class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+                  px-6 py-3 rounded-xl border border-red-500/35 text-red-400 no-underline
+                  transition-all duration-200 hover:bg-red-500/10 hover:border-red-400 hover:-translate-y-0.5"
+           onclick="return confirm('Seguro que deseas eliminar este evento?')">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+            Eliminar
+        </a>
+        <a asp-action="Index"
+           class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+                  px-6 py-3 rounded-xl border border-game-violet/40 text-game-violet no-underline
+                  transition-all duration-200 hover:bg-game-purple/15 hover:-translate-y-0.5">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            Volver
+        </a>
+    </div>
+</div>
+
+
+<div class="grid grid-cols-[1fr_320px] gap-6 items-start animate-slide-d1">
+
+
+    <div class="relative bg-game-card rounded-2xl border border-game-blue/20 overflow-hidden border-top-blue">
+        <div class="flex items-center justify-between px-7 py-5 border-b border-game-blue/10 bg-game-blue/[0.02]">
+            <div class="flex items-center gap-2">
+                <i data-lucide="clipboard-list" class="w-5 h-5 text-game-blue"></i>
+                <div class="font-orbitron font-bold text-base tracking-wide text-gradient-blue">INFORMACION</div>
+            </div>
+            @if (Model.IsActive)
+            {
+                <span class="badge-dot-pulse inline-flex items-center gap-1.5 font-bold text-xs uppercase
+                             tracking-wide px-3 py-1 rounded-full bg-neon/10 text-neon border border-neon/25">
+                    <i data-lucide="circle" class="w-2 h-2 fill-current"></i>
+                    Activo
+                </span>
+            }
+            else
+            {
+                <span class="inline-flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide
+                             px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/25">
+                    <i data-lucide="circle" class="w-2 h-2 fill-current"></i>
+                    Inactivo
+                </span>
+            }
+        </div>
+
+        <div class="p-7">
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="bg-white/[0.02] rounded-xl p-4 border border-white/[0.05]">
+                    <div class="font-orbitron text-[0.58rem] text-slate-500 tracking-[2px] uppercase mb-2">Categoria</div>
+                    <div class="font-bold text-game-violet flex items-center gap-2">
+                        <i data-lucide="gamepad-2" class="w-4 h-4"></i>
+                        @Model.Category
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] rounded-xl p-4 border border-white/[0.05]">
+                    <div class="font-orbitron text-[0.58rem] text-slate-500 tracking-[2px] uppercase mb-2">Fecha</div>
+                    <div class="font-bold text-neon flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        @Model.Date.ToString("dd MMM yyyy")
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] rounded-xl p-4 border border-white/[0.05]">
+                    <div class="font-orbitron text-[0.58rem] text-slate-500 tracking-[2px] uppercase mb-2">Ubicacion</div>
+                    <div class="font-bold text-slate-200 flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-slate-500"></i>
+                        @Model.Location
+                    </div>
+                </div>
+                <div class="bg-white/[0.02] rounded-xl p-4 border border-white/[0.05]">
+                    <div class="font-orbitron text-[0.58rem] text-slate-500 tracking-[2px] uppercase mb-2">Registrado</div>
+                    <div class="font-bold text-slate-500 flex items-center gap-2">
+                        <i data-lucide="clock" class="w-4 h-4"></i>
+                        @Model.CreatedAt.ToString("dd MMM yyyy")
+                    </div>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <div>
+                    <div class="font-orbitron text-[0.6rem] text-slate-500 tracking-[2px] uppercase mb-3">Descripcion</div>
+                    <p class="text-slate-400 leading-relaxed text-sm bg-white/[0.02] p-4 rounded-xl border border-white/[0.04]">
+                        @Model.Description
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <div class="flex flex-col gap-4">
+
+
+        @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+        {
+            <div class="relative bg-game-card rounded-2xl border border-neon/15 overflow-hidden border-top-green">
+                <img src="@Model.ImageUrl" alt="@Model.Name" class="w-full h-48 object-cover block" />
+                <div class="px-5 py-3 text-xs text-slate-500 flex items-center gap-2">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                    Imagen del evento
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="bg-game-card rounded-2xl border border-neon/10 border-top-green
+                        h-40 flex flex-col items-center justify-center gap-2 text-slate-800">
+                <i data-lucide="image-off" class="w-10 h-10 opacity-20"></i>
+                <span class="text-xs tracking-widest uppercase">Sin imagen</span>
+            </div>
+        }
+
+        
+        <div class="relative bg-game-card rounded-2xl border border-game-violet/20 overflow-hidden border-top-purple">
+            <div class="p-5">
+                <div class="font-orbitron text-[0.62rem] text-slate-500 tracking-[2px] uppercase mb-4">Meta</div>
+                <div class="flex flex-col gap-3">
+                    <div class="flex justify-between items-center pb-3 border-b border-white/[0.04]">
+                        <span class="text-slate-500 text-sm flex items-center gap-2">
+                            <i data-lucide="hash" class="w-3.5 h-3.5"></i> ID
+                        </span>
+                        <span class="font-orbitron text-sm text-slate-200">#@Model.Id</span>
+                    </div>
+                    <div class="flex justify-between items-center pb-3 border-b border-white/[0.04]">
+                        <span class="text-slate-500 text-sm flex items-center gap-2">
+                            <i data-lucide="activity" class="w-3.5 h-3.5"></i> Estado
+                        </span>
+                        @if (Model.IsActive)
+                        {
+                            <span class="badge-dot-pulse inline-flex items-center gap-1.5 font-bold text-xs uppercase
+                                         tracking-wide px-3 py-1 rounded-full bg-neon/10 text-neon border border-neon/25">
+                                <i data-lucide="circle" class="w-2 h-2 fill-current"></i>
+                                Activo
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="inline-flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide
+                                         px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/25">
+                                <i data-lucide="circle" class="w-2 h-2 fill-current"></i>
+                                Inactivo
+                            </span>
+                        }
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500 text-sm flex items-center gap-2">
+                            <i data-lucide="calendar-plus" class="w-3.5 h-3.5"></i> Creado
+                        </span>
+                        <span class="text-slate-200 text-sm">@Model.CreatedAt.ToString("dd/MM/yyyy")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="relative bg-game-card rounded-2xl border border-neon/10 overflow-hidden border-top-green">
+            <div class="p-5">
+                <div class="font-orbitron text-[0.62rem] text-slate-500 tracking-[2px] uppercase mb-4">Acciones Rapidas</div>
+                <div class="flex flex-col gap-2.5">
+                    <a asp-action="Edit" asp-route-id="@Model.Id"
+                       class="flex justify-center items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+                              px-6 py-3 rounded-xl bg-gradient-to-r from-game-purple to-game-violet text-white no-underline
+                              shadow-[0_4px_20px_rgba(124,58,237,0.25)] transition-all duration-200
+                              hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(124,58,237,0.45)]">
+                        <i data-lucide="pencil" class="w-4 h-4"></i>
+                        Editar Evento
+                    </a>
+                    <a asp-action="Destroy" asp-route-id="@Model.Id"
+                       class="flex justify-center items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+                              px-6 py-3 rounded-xl border border-red-500/35 text-red-400 no-underline
+                              transition-all duration-200 hover:bg-red-500/10 hover:border-red-400 hover:-translate-y-0.5"
+                       onclick="return confirm('Seguro que deseas eliminar este evento?')">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        Eliminar Evento
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
