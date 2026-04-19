@@ -1,120 +1,215 @@
 @model IEnumerable<Juanfewi.Models.Event>
 
 @{
-    ViewData["Title"] = "Panel Gamer";
+    ViewData["Title"]     = "Panel Gamer";
     ViewData["ActiveNav"] = "index";
     var total    = Model.Count();
     var active   = Model.Count(e => e.IsActive);
     var inactive = Model.Count(e => !e.IsActive);
 }
 
-<!-- HERO -->
-<div class="pf-hero pf-animate">
+
+<div class="relative rounded-2xl px-12 py-10 mb-8 overflow-hidden animate-slide-in
+            bg-gradient-to-br from-game-card via-[#1a0a2e] to-[#0a1f12]
+            border border-neon/20 flex items-center justify-between gap-8">
+
+    <div class="absolute top-0 left-0 right-0 h-0.5
+                bg-gradient-to-r from-transparent via-neon to-game-violet"></div>
+
+    <div class="absolute right-12 top-1/2 text-[10rem] opacity-[0.04] text-neon
+                pointer-events-none animate-spin-slow select-none font-orbitron">&#9674;</div>
+
     <div>
-        <div class="pf-hero__eyebrow">Panel de Gestión</div>
-        <h1 class="pf-hero__title">GAMER<br>COMMAND</h1>
-        <p class="pf-hero__sub">Administra torneos, eventos y experiencias gaming desde un solo cuartel general.</p>
-        <div class="pf-hero__actions">
-            <a asp-action="Create" class="btn-pf-primary">⚡ Crear Evento</a>
+        <div class="font-orbitron text-[0.63rem] font-bold tracking-[4px] uppercase text-neon mb-3
+                    flex items-center gap-2">
+            <span class="block w-6 h-0.5 bg-neon shadow-[0_0_8px_#00ff87]"></span>
+            Panel de Gestion
+        </div>
+        <h1 class="font-orbitron font-black text-[2.4rem] leading-none mb-3 text-gradient-green">
+            GAMER<br>COMMAND
+        </h1>
+        <p class="text-slate-400 text-lg max-w-lg leading-relaxed">
+            Administra torneos, eventos y experiencias gaming desde un solo cuartel general.
+        </p>
+        <div class="flex gap-4 mt-7 flex-wrap">
+            <a asp-action="Create"
+               class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+                      px-6 py-3 rounded-xl bg-gradient-to-r from-neon to-neon-dark text-game-bg no-underline
+                      shadow-[0_4px_24px_rgba(0,255,135,0.3)] transition-all duration-200
+                      hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(0,255,135,0.45)]">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                Crear Evento
+            </a>
         </div>
     </div>
-    <div class="pf-hero__badges">
-        <div class="pf-hero__badge pf-hero__badge--green">
-            <span class="pf-hero__badge-num pf-hero__badge-num--green">@total</span>
-            <span class="pf-hero__badge-label">Eventos</span>
+
+    <div class="flex gap-4 items-center flex-shrink-0">
+        <div class="rounded-2xl px-6 py-5 text-center min-w-[110px] bg-neon/[0.06] border border-neon/20">
+            <span class="font-orbitron font-black text-4xl text-neon glow-green block">@total</span>
+            <span class="text-[0.73rem] text-slate-500 tracking-widest uppercase">Eventos</span>
         </div>
-        <div class="pf-hero__badge pf-hero__badge--purple">
-            <span class="pf-hero__badge-num pf-hero__badge-num--purple">@active</span>
-            <span class="pf-hero__badge-label">Activos</span>
+        <div class="rounded-2xl px-6 py-5 text-center min-w-[110px] bg-game-purple/[0.06] border border-game-violet/30">
+            <span class="font-orbitron font-black text-4xl text-game-violet glow-purple block">@active</span>
+            <span class="text-[0.73rem] text-slate-500 tracking-widest uppercase">Activos</span>
         </div>
     </div>
 </div>
 
-<!-- STATS -->
-<div class="pf-stats pf-animate--d1">
-    <div class="pf-stat pf-stat--blue">
-        <div class="pf-stat__glow"></div>
-        <div class="pf-stat__icon">📅</div>
-        <div class="pf-stat__label">Total Eventos</div>
-        <div class="pf-stat__num">@total</div>
+
+<div class="grid grid-cols-3 gap-4 mb-8 animate-slide-d1">
+
+    <div class="relative bg-game-card rounded-2xl p-7 border border-game-blue/20 overflow-hidden
+                transition-transform duration-300 hover:-translate-y-1 border-top-blue">
+        <div class="absolute -top-10 -right-10 w-28 h-28 rounded-full bg-game-blue blur-3xl opacity-15"></div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4
+                    bg-game-blue/10 border border-game-blue/25">
+            <i data-lucide="calendar-days" class="w-6 h-6 text-game-blue"></i>
+        </div>
+        <div class="text-[0.78rem] font-semibold uppercase tracking-[1.5px] text-slate-500 mb-1">Total Eventos</div>
+        <div class="font-orbitron font-black text-5xl text-game-blue">@total</div>
     </div>
-    <div class="pf-stat pf-stat--green">
-        <div class="pf-stat__glow"></div>
-        <div class="pf-stat__icon">✅</div>
-        <div class="pf-stat__label">Activos</div>
-        <div class="pf-stat__num">@active</div>
+
+    <div class="relative bg-game-card rounded-2xl p-7 border border-neon/20 overflow-hidden
+                transition-transform duration-300 hover:-translate-y-1 border-top-green">
+        <div class="absolute -top-10 -right-10 w-28 h-28 rounded-full bg-neon blur-3xl opacity-10"></div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4
+                    bg-neon/10 border border-neon/25">
+            <i data-lucide="check-circle-2" class="w-6 h-6 text-neon"></i>
+        </div>
+        <div class="text-[0.78rem] font-semibold uppercase tracking-[1.5px] text-slate-500 mb-1">Activos</div>
+        <div class="font-orbitron font-black text-5xl text-neon glow-green">@active</div>
     </div>
-    <div class="pf-stat pf-stat--orange">
-        <div class="pf-stat__glow"></div>
-        <div class="pf-stat__icon">⏸</div>
-        <div class="pf-stat__label">Inactivos</div>
-        <div class="pf-stat__num">@inactive</div>
+
+    <div class="relative bg-game-card rounded-2xl p-7 border border-orange-500/20 overflow-hidden
+                transition-transform duration-300 hover:-translate-y-1"
+         style="box-shadow: inset 0 2px 0 0 #f97316;">
+        <div class="absolute -top-10 -right-10 w-28 h-28 rounded-full bg-orange-500 blur-3xl opacity-10"></div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4
+                    bg-orange-500/10 border border-orange-500/25">
+            <i data-lucide="pause-circle" class="w-6 h-6 text-orange-400"></i>
+        </div>
+        <div class="text-[0.78rem] font-semibold uppercase tracking-[1.5px] text-slate-500 mb-1">Inactivos</div>
+        <div class="font-orbitron font-black text-5xl text-orange-500">@inactive</div>
     </div>
 </div>
 
-<!-- TABLE -->
-<div class="pf-card pf-animate--d2">
-    <div class="pf-card__header">
+
+<div class="relative bg-game-card rounded-2xl border border-neon/15 overflow-hidden animate-slide-d2 border-top-green">
+
+    <div class="flex items-center justify-between gap-4 px-7 py-5
+                border-b border-neon/[0.08] bg-neon/[0.02]">
         <div>
-            <div class="pf-card__title">LISTA DE EVENTOS</div>
-            <div class="pf-card__subtitle">Visualiza, edita o elimina tus eventos</div>
+            <div class="font-orbitron font-bold text-base tracking-wide text-white">LISTA DE EVENTOS</div>
+            <div class="text-sm text-slate-500 mt-0.5">Visualiza, edita o elimina tus eventos</div>
         </div>
-        <a asp-action="Create" class="btn-pf-primary btn-pf-sm">+ NUEVO</a>
+        <a asp-action="Create"
+           class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.66rem] tracking-widest
+                  px-4 py-2 rounded-xl bg-gradient-to-r from-neon to-neon-dark text-game-bg no-underline
+                  shadow-[0_3px_16px_rgba(0,255,135,0.25)] transition-all duration-200
+                  hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(0,255,135,0.4)]">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            NUEVO
+        </a>
     </div>
 
     @if (!Model.Any())
     {
-        <div class="pf-empty">
-            <span class="pf-empty__icon">🎮</span>
-            <div class="pf-empty__title">SIN EVENTOS</div>
-            <p class="pf-empty__text">No hay eventos registrados todavía. ¡Crea el primero!</p>
-            <a asp-action="Create" class="btn-pf-primary">⚡ Crear Evento</a>
+        <div class="py-16 text-center">
+            <div class="flex justify-center mb-4 opacity-20">
+                <i data-lucide="gamepad-2" class="w-16 h-16 text-slate-400"></i>
+            </div>
+            <div class="font-orbitron text-base text-slate-700 tracking-wider mb-2">SIN EVENTOS</div>
+            <p class="text-slate-700 text-sm mb-6">No hay eventos registrados todavia. Crea el primero.</p>
+            <a asp-action="Create"
+               class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+                      px-6 py-3 rounded-xl bg-gradient-to-r from-neon to-neon-dark text-game-bg no-underline
+                      shadow-[0_4px_24px_rgba(0,255,135,0.3)] transition-all duration-200 hover:-translate-y-1">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                Crear Evento
+            </a>
         </div>
     }
     else
     {
-        <div style="overflow-x:auto;">
-            <table class="pf-table">
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse">
                 <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Categoría</th>
-                        <th>Fecha</th>
-                        <th>Ubicación</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
+                    <tr class="border-b border-neon/[0.08]">
+                        <th class="font-orbitron text-[0.6rem] font-bold tracking-[2px] uppercase text-slate-500 px-5 py-4 text-left">Nombre</th>
+                        <th class="font-orbitron text-[0.6rem] font-bold tracking-[2px] uppercase text-slate-500 px-5 py-4 text-left">Categoria</th>
+                        <th class="font-orbitron text-[0.6rem] font-bold tracking-[2px] uppercase text-slate-500 px-5 py-4 text-left">Fecha</th>
+                        <th class="font-orbitron text-[0.6rem] font-bold tracking-[2px] uppercase text-slate-500 px-5 py-4 text-left">Ubicacion</th>
+                        <th class="font-orbitron text-[0.6rem] font-bold tracking-[2px] uppercase text-slate-500 px-5 py-4 text-left">Estado</th>
+                        <th class="font-orbitron text-[0.6rem] font-bold tracking-[2px] uppercase text-slate-500 px-5 py-4 text-left">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var ev in Model)
+                    @foreach (var even in Model)
                     {
-                        <tr>
-                            <td>
-                                <span class="pf-table__name">@ev.Name</span>
-                                <span class="pf-table__id">ID #@ev.Id</span>
+                        <tr class="border-b border-white/[0.04] transition-colors duration-200 hover:bg-neon/[0.03]">
+                            <td class="px-5 py-4">
+                                <span class="text-white font-bold text-[0.95rem] block">@even.Name</span>
+                                <span class="text-slate-500 text-xs">ID #@even.Id</span>
                             </td>
-                            <td><span class="pf-badge pf-badge--cat">@ev.Category</span></td>
-                            <td>@ev.Date.ToString("dd MMM yyyy")</td>
-                            <td>📍 @ev.Location</td>
-                            <td>
-                                @if (ev.IsActive)
+                            <td class="px-5 py-4">
+                                <span class="text-xs font-bold px-3 py-1 rounded-lg
+                                             bg-game-purple/15 text-game-violet border border-game-purple/25">
+                                    @even.Category
+                                </span>
+                            </td>
+                            <td class="px-5 py-4 text-slate-400 text-sm">
+                                @even.Date.ToString("dd MMM yyyy")
+                            </td>
+                            <td class="px-5 py-4 text-slate-400 text-sm">
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-600"></i>
+                                    @even.Location
+                                </div>
+                            </td>
+                            <td class="px-5 py-4">
+                                @if (even.IsActive)
                                 {
-                                    <span class="pf-badge pf-badge--active">Activo</span>
+                                    <span class="badge-dot-pulse inline-flex items-center gap-1.5 font-bold text-xs
+                                                 uppercase tracking-wide px-3 py-1 rounded-full
+                                                 bg-neon/10 text-neon border border-neon/25">
+                                        <i data-lucide="circle" class="w-2 h-2 fill-current"></i>
+                                        Activo
+                                    </span>
                                 }
                                 else
                                 {
-                                    <span class="pf-badge pf-badge--inactive">Inactivo</span>
+                                    <span class="inline-flex items-center gap-1.5 font-bold text-xs
+                                                 uppercase tracking-wide px-3 py-1 rounded-full
+                                                 bg-orange-500/10 text-orange-400 border border-orange-500/25">
+                                        <i data-lucide="circle" class="w-2 h-2 fill-current"></i>
+                                        Inactivo
+                                    </span>
                                 }
                             </td>
-                            <td>
-                                <div class="pf-actions">
-                                    <a asp-action="Show" asp-route-id="@ev.Id"
-                                       class="pf-icon-btn pf-icon-btn--view" title="Ver">👁</a>
-                                    <a asp-action="Edit" asp-route-id="@ev.Id"
-                                       class="pf-icon-btn pf-icon-btn--edit" title="Editar">✏️</a>
-                                    <a asp-action="Destroy" asp-route-id="@ev.Id"
-                                       class="pf-icon-btn pf-icon-btn--delete" title="Eliminar"
-                                       onclick="return confirm('¿Eliminar el evento @ev.Name?')">🗑</a>
+                            <td class="px-5 py-4">
+                                <div class="flex gap-1.5">
+                                    <a asp-action="Show" asp-route-id="@even.Id"
+                                       class="w-8 h-8 rounded-lg border border-white/[0.07] bg-white/[0.03] text-slate-500
+                                              flex items-center justify-center no-underline transition-all duration-200
+                                              hover:bg-game-blue/10 hover:border-game-blue/30 hover:text-game-blue"
+                                       title="Ver detalle">
+                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@even.Id"
+                                       class="w-8 h-8 rounded-lg border border-white/[0.07] bg-white/[0.03] text-slate-500
+                                              flex items-center justify-center no-underline transition-all duration-200
+                                              hover:bg-neon/10 hover:border-neon/25 hover:text-neon"
+                                       title="Editar">
+                                        <i data-lucide="pencil" class="w-4 h-4"></i>
+                                    </a>
+                                    <a asp-action="Destroy" asp-route-id="@even.Id"
+                                       class="w-8 h-8 rounded-lg border border-white/[0.07] bg-white/[0.03] text-slate-500
+                                              flex items-center justify-center no-underline transition-all duration-200
+                                              hover:bg-red-500/10 hover:border-red-500/25 hover:text-red-400"
+                                       title="Eliminar"
+                                       onclick="return confirm('Eliminar el evento @even.Name?')">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
