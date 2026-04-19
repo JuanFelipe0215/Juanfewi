@@ -1,0 +1,292 @@
+@model IEnumerable<Juanfewi.Models.Event>
+
+@{
+    ViewData["Title"] = "Eventos";
+    Layout = null;
+    var activeEvents = Model.Where(e => e.IsActive).ToList();
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixelFest — Eventos</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon':        '#00ff87',
+                        'neon-dark':   '#00b857',
+                        'game-purple': '#7c3aed',
+                        'game-violet': '#a855f7',
+                        'game-blue':   '#0ea5e9',
+                        'game-bg':     '#050811',
+                        'game-card':   '#0d1117',
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'monospace'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body class="bg-game-bg font-rajdhani text-slate-200 min-h-screen overflow-x-hidden bg-grid">
+
+
+    <div class="fixed top-0 left-0 w-[60%] h-[80%] -translate-x-[20%] -translate-y-[50%] rounded-full
+                bg-game-purple/10 blur-[100px] pointer-events-none z-0 animate-breathe"></div>
+    <div class="fixed bottom-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full
+                bg-neon/[0.07] blur-[80px] pointer-events-none z-0"></div>
+    <div class="scanlines"></div>
+
+
+    <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between
+                px-10 h-16 bg-game-bg/85 backdrop-blur-xl border-b border-neon/[0.12]">
+        <a asp-controller="Event" asp-action="Landing"
+           class="font-orbitron font-black text-xl tracking-widest text-gradient-logo
+                  flex items-center gap-3 no-underline">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-neon to-game-purple
+                        flex items-center justify-center shadow-[0_0_16px_rgba(0,255,135,0.4)]">
+                <i data-lucide="zap" class="w-4 h-4 text-game-bg"></i>
+            </div>
+            PIXELFEST
+        </a>
+        <div class="flex items-center gap-2">
+            <a asp-controller="Event" asp-action="Landing"
+               class="font-rajdhani font-semibold text-sm uppercase tracking-widest px-4 py-2 rounded-lg
+                      text-neon bg-neon/10 no-underline flex items-center gap-2">
+                <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                Eventos
+            </a>
+            <a asp-controller="Event" asp-action="Index"
+               class="font-orbitron font-bold text-[0.68rem] tracking-widest px-5 py-2 rounded-lg
+                      bg-gradient-to-r from-game-purple to-game-violet text-white no-underline
+                      shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-200
+                      flex items-center gap-2
+                      hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(124,58,237,0.55)]">
+                <i data-lucide="shield" class="w-4 h-4"></i>
+                ADMIN
+            </a>
+        </div>
+    </nav>
+    
+    <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16">
+
+        <!-- Big decorative text -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+            <span class="font-orbitron font-black text-[20rem] text-white/[0.015] leading-none">PF</span>
+        </div>
+
+        <div class="relative z-10 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 font-orbitron text-[0.65rem] font-bold tracking-[4px]
+                        uppercase text-neon mb-6 px-4 py-2 rounded-full border border-neon/20 bg-neon/[0.06]">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                Temporada 2026 — En vivo
+            </div>
+
+            <h1 class="font-orbitron font-black leading-none mb-6">
+                <span class="block text-[4.5rem] text-white">EL MEJOR</span>
+                <span class="block text-[4.5rem] text-gradient-green">GAMING</span>
+                <span class="block text-[4.5rem] text-white">ESTA AQUI</span>
+            </h1>
+
+            <p class="text-slate-400 text-xl leading-relaxed mb-10 max-w-xl mx-auto">
+                Torneos, experiencias y competencias epicas. Encuentra tu proximo reto y demuestra de que estas hecho.
+            </p>
+
+            <div class="flex items-center justify-center gap-4 flex-wrap">
+                <a href="#eventos"
+                   class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.75rem] tracking-widest
+                          px-8 py-4 rounded-xl bg-gradient-to-r from-neon to-neon-dark text-game-bg no-underline
+                          shadow-[0_4px_32px_rgba(0,255,135,0.35)] transition-all duration-200
+                          hover:-translate-y-1 hover:shadow-[0_8px_40px_rgba(0,255,135,0.5)]">
+                    <i data-lucide="trophy" class="w-4 h-4"></i>
+                    Ver Eventos
+                </a>
+                <a asp-controller="Event" asp-action="Index"
+                   class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.75rem] tracking-widest
+                          px-8 py-4 rounded-xl border border-game-violet/40 text-game-violet no-underline
+                          transition-all duration-200 hover:bg-game-purple/15 hover:-translate-y-1">
+                    <i data-lucide="shield" class="w-4 h-4"></i>
+                    Panel Admin
+                </a>
+            </div>
+        </div>
+
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2
+                    text-slate-600 animate-bounce">
+            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        </div>
+    </section>
+    
+    <section class="relative z-10 border-y border-neon/[0.08] bg-game-card/50 backdrop-blur-sm">
+        <div class="max-w-[1200px] mx-auto px-10 py-8 grid grid-cols-3 gap-0 divide-x divide-neon/[0.08]">
+            <div class="flex flex-col items-center gap-1 px-8">
+                <span class="font-orbitron font-black text-4xl text-neon glow-green">@Model.Count()</span>
+                <span class="font-orbitron text-[0.65rem] tracking-[3px] uppercase text-slate-500">Eventos Totales</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 px-8">
+                <span class="font-orbitron font-black text-4xl text-game-violet glow-purple">@activeEvents.Count</span>
+                <span class="font-orbitron text-[0.65rem] tracking-[3px] uppercase text-slate-500">Activos Ahora</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 px-8">
+                <span class="font-orbitron font-black text-4xl text-game-blue">2026</span>
+                <span class="font-orbitron text-[0.65rem] tracking-[3px] uppercase text-slate-500">Temporada</span>
+            </div>
+        </div>
+    </section>
+    
+    <section id="eventos" class="relative z-10 max-w-[1200px] mx-auto px-10 py-20">
+
+        <div class="text-center mb-14">
+            <div class="inline-flex items-center gap-2 font-orbitron text-[0.63rem] font-bold tracking-[4px]
+                        uppercase text-neon mb-4">
+                <span class="block w-8 h-0.5 bg-neon/40"></span>
+                Proximos Eventos
+                <span class="block w-8 h-0.5 bg-neon/40"></span>
+            </div>
+            <h2 class="font-orbitron font-black text-[2.5rem] text-white">
+                ENCUENTRA TU<br>
+                <span class="text-gradient-green">PROXIMO RETO</span>
+            </h2>
+        </div>
+
+        @if (!activeEvents.Any())
+        {
+
+            <div class="text-center py-20">
+                <div class="flex justify-center mb-6 opacity-20">
+                    <i data-lucide="gamepad-2" class="w-20 h-20 text-slate-400"></i>
+                </div>
+                <div class="font-orbitron text-lg text-slate-700 tracking-wider mb-3">SIN EVENTOS ACTIVOS</div>
+                <p class="text-slate-700 text-base">Vuelve pronto, se vienen cositas buenas.</p>
+            </div>
+        }
+        else
+        {
+            <div class="grid grid-cols-3 gap-6">
+                @foreach (var ev in activeEvents)
+                {
+
+                    <div class="group relative bg-game-card rounded-2xl border border-neon/10 overflow-hidden
+                                transition-all duration-300 hover:-translate-y-2 hover:border-neon/30
+                                hover:shadow-[0_16px_48px_rgba(0,255,135,0.1)]">
+
+
+                        <div class="absolute top-0 left-0 right-0 h-0.5
+                                    bg-gradient-to-r from-transparent via-neon to-transparent
+                                    opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+
+                        @if (!string.IsNullOrWhiteSpace(ev.ImageUrl))
+                        {
+                            <div class="relative overflow-hidden h-48">
+                                <img src="@ev.ImageUrl" alt="@ev.Name"
+                                     class="w-full h-full object-cover transition-transform duration-500
+                                            group-hover:scale-105" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-game-card via-transparent to-transparent"></div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="h-48 bg-gradient-to-br from-game-purple/20 to-game-card
+                                        flex items-center justify-center border-b border-neon/[0.06]">
+                                <i data-lucide="gamepad-2" class="w-12 h-12 text-slate-700"></i>
+                            </div>
+                        }
+
+                        <div class="p-6">
+
+                            <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-lg mb-3
+                                         bg-game-purple/15 text-game-violet border border-game-purple/25">
+                                <i data-lucide="tag" class="w-3 h-3"></i>
+                                @ev.Category
+                            </span>
+
+                            <!-- Title -->
+                            <h3 class="font-orbitron font-bold text-lg text-white mb-2 leading-snug">
+                                @ev.Name
+                            </h3>
+
+                            @if (!string.IsNullOrWhiteSpace(ev.Description))
+                            {
+                                <p class="text-slate-500 text-sm leading-relaxed mb-4 line-clamp-2">
+                                    @ev.Description
+                                </p>
+                            }
+
+
+                            <div class="flex flex-col gap-2 mb-5 pt-4 border-t border-white/[0.05]">
+                                <div class="flex items-center gap-2 text-sm text-slate-500">
+                                    <i data-lucide="calendar" class="w-4 h-4 text-neon/60"></i>
+                                    @ev.Date.ToString("dd MMM yyyy — HH:mm")
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-slate-500">
+                                    <i data-lucide="map-pin" class="w-4 h-4 text-neon/60"></i>
+                                    @ev.Location
+                                </div>
+                            </div>
+
+                           
+                            <a asp-action="Show" asp-route-id="@ev.Id"
+                               class="flex items-center justify-center gap-2 w-full
+                                      font-orbitron font-bold text-[0.68rem] tracking-widest
+                                      px-4 py-3 rounded-xl no-underline transition-all duration-200
+                                      border border-neon/20 text-neon bg-neon/[0.04]
+                                      hover:bg-neon/10 hover:border-neon/40">
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                Ver Detalle
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </section>
+
+
+    <section class="relative z-10 border-t border-neon/[0.06]">
+        <div class="max-w-[1200px] mx-auto px-10 py-16 text-center">
+            <div class="inline-block bg-game-card rounded-2xl border border-game-violet/20 px-12 py-10
+                        border-top-purple relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-game-purple/5 to-transparent pointer-events-none"></div>
+                <div class="relative">
+                    <i data-lucide="shield" class="w-10 h-10 text-game-violet mx-auto mb-4"></i>
+                    <h3 class="font-orbitron font-black text-2xl text-white mb-2">AREA ADMIN</h3>
+                    <p class="text-slate-500 text-base mb-6 max-w-sm mx-auto">
+                        Gestiona eventos, crea torneos y administra la plataforma.
+                    </p>
+                    <a asp-controller="Event" asp-action="Index"
+                       class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.72rem] tracking-widest
+                              px-8 py-4 rounded-xl bg-gradient-to-r from-game-purple to-game-violet text-white no-underline
+                              shadow-[0_4px_24px_rgba(124,58,237,0.3)] transition-all duration-200
+                              hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(124,58,237,0.5)]">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Ir al Panel Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="relative z-10 border-t border-neon/[0.06] px-10 py-6
+                   flex items-center justify-between flex-wrap gap-4">
+        <span class="text-xs font-semibold text-slate-800">
+            &copy; 2026 — <span class="text-gradient-logo">PixelFest</span>. Todos los derechos reservados.
+        </span>
+    </footer>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
