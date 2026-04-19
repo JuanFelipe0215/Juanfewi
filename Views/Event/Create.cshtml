@@ -1,0 +1,172 @@
+@model Juanfewi.Models.Event
+
+@{
+    ViewData["Title"] = "Crear Evento";
+}
+
+<div class="flex items-center justify-between flex-wrap gap-4 mb-8 animate-slide-in">
+    <div>
+        <div class="font-orbitron text-[0.63rem] font-bold tracking-[4px] uppercase text-neon mb-2
+                    flex items-center gap-2">
+            <span class="block w-6 h-0.5 bg-neon shadow-[0_0_8px_#00ff87]"></span>
+            Nuevo Evento
+        </div>
+        <h1 class="font-orbitron font-black text-[1.9rem] text-gradient-green">CREAR EVENTO</h1>
+    </div>
+    <a asp-action="Index"
+       class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+              px-6 py-3 rounded-xl border border-game-violet/40 text-game-violet no-underline
+              transition-all duration-200 hover:bg-game-purple/15 hover:-translate-y-0.5">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        Volver
+    </a>
+</div>
+
+
+<div class="relative bg-game-card rounded-2xl border border-neon/15 overflow-hidden animate-slide-d1 border-top-green">
+    <div class="px-7 py-5 border-b border-neon/[0.08] bg-neon/[0.02] flex items-center gap-3">
+        <i data-lucide="zap" class="w-5 h-5 text-neon"></i>
+        <div>
+            <div class="font-orbitron font-bold text-base tracking-wide text-white">DATOS DEL EVENTO</div>
+            <div class="text-sm text-slate-500">Completa la informacion para registrar un nuevo evento</div>
+        </div>
+    </div>
+
+    <div class="p-7">
+        <form asp-action="Store" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="grid grid-cols-2 gap-5">
+
+                <div class="flex flex-col gap-1.5">
+                    <label asp-for="Name"
+                           class="font-orbitron text-[0.63rem] font-bold tracking-[2px] uppercase text-slate-500">
+                        Nombre del Evento
+                    </label>
+                    <input asp-for="Name" autocomplete="off" placeholder="Ej: PixelFest Open 2026"
+                           class="input-neon w-full bg-white/[0.04] border border-neon/15 rounded-xl
+                                  px-4 py-3 font-rajdhani text-base font-medium text-slate-200
+                                  transition-all duration-200 placeholder:text-slate-700" />
+                    <span asp-validation-for="Name" class="text-red-400 text-xs flex items-center gap-1">
+                    </span>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label asp-for="Category"
+                           class="font-orbitron text-[0.63rem] font-bold tracking-[2px] uppercase text-slate-500">
+                        Categoria
+                    </label>
+                    <select asp-for="Category"
+                            class="input-neon w-full bg-white/[0.04] border border-neon/15 rounded-xl
+                                   px-4 py-3 font-rajdhani text-base font-medium text-slate-200
+                                   transition-all duration-200">
+                        <option value="" disabled selected class="bg-game-card">Selecciona una categoria</option>
+                        <option value="FPS"           class="bg-game-card">FPS</option>
+                        <option value="MOBA"          class="bg-game-card">MOBA</option>
+                        <option value="Battle Royale" class="bg-game-card">Battle Royale</option>
+                        <option value="RPG"           class="bg-game-card">RPG</option>
+                        <option value="Retro"         class="bg-game-card">Retro</option>
+                        <option value="Fighting"      class="bg-game-card">Fighting</option>
+                        <option value="Sports"        class="bg-game-card">Sports</option>
+                        <option value="RTS"           class="bg-game-card">RTS</option>
+                        <option value="Otro"          class="bg-game-card">Otro</option>
+                    </select>
+                    <span asp-validation-for="Category" class="text-red-400 text-xs"></span>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label asp-for="Date"
+                           class="font-orbitron text-[0.63rem] font-bold tracking-[2px] uppercase text-slate-500">
+                        Fecha del Evento
+                    </label>
+                    <input asp-for="Date" type="datetime-local"
+                           class="input-neon w-full bg-white/[0.04] border border-neon/15 rounded-xl
+                                  px-4 py-3 font-rajdhani text-base font-medium text-slate-200
+                                  transition-all duration-200" />
+                    <span asp-validation-for="Date" class="text-red-400 text-xs"></span>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label asp-for="Location"
+                           class="font-orbitron text-[0.63rem] font-bold tracking-[2px] uppercase text-slate-500">
+                        Ubicacion
+                    </label>
+                    <input asp-for="Location" autocomplete="off" placeholder="Ej: Bogota, Colombia"
+                           class="input-neon w-full bg-white/[0.04] border border-neon/15 rounded-xl
+                                  px-4 py-3 font-rajdhani text-base font-medium text-slate-200
+                                  transition-all duration-200 placeholder:text-slate-700" />
+                    <span asp-validation-for="Location" class="text-red-400 text-xs"></span>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5 mt-5">
+                <label asp-for="Description"
+                       class="font-orbitron text-[0.63rem] font-bold tracking-[2px] uppercase text-slate-500">
+                    Descripcion
+                </label>
+                <textarea asp-for="Description" rows="4" placeholder="Describe el evento, reglas, premios..."
+                          class="input-neon w-full bg-white/[0.04] border border-neon/15 rounded-xl
+                                 px-4 py-3 font-rajdhani text-base font-medium text-slate-200
+                                 transition-all duration-200 placeholder:text-slate-700 resize-y"></textarea>
+                <span asp-validation-for="Description" class="text-red-400 text-xs"></span>
+            </div>
+
+            <div class="flex flex-col gap-1.5 mt-5">
+                <label asp-for="ImageUrl"
+                       class="font-orbitron text-[0.63rem] font-bold tracking-[2px] uppercase text-slate-500">
+                    URL de Imagen <span class="normal-case font-rajdhani tracking-normal text-slate-700">(opcional)</span>
+                </label>
+                <div class="relative">
+                    <i data-lucide="image" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600"></i>
+                    <input asp-for="ImageUrl" type="url" placeholder="https://ejemplo.com/imagen.jpg"
+                           class="input-neon w-full bg-white/[0.04] border border-neon/15 rounded-xl
+                                  pl-11 pr-4 py-3 font-rajdhani text-base font-medium text-slate-200
+                                  transition-all duration-200 placeholder:text-slate-700" />
+                </div>
+                <span asp-validation-for="ImageUrl" class="text-red-400 text-xs"></span>
+            </div>
+
+            <div class="mt-5">
+                <div class="font-orbitron text-[0.63rem] font-bold tracking-[2px] uppercase text-slate-500 mb-3">Estado</div>
+                <div class="flex gap-4 flex-wrap">
+                    <label class="flex items-center gap-3 cursor-pointer px-5 py-3 rounded-xl
+                                  border border-neon/20 bg-neon/[0.04] transition-all duration-200
+                                  hover:border-neon/40">
+                        <input type="radio" name="IsActive" value="true" checked class="w-4 h-4 accent-[#00ff87]" />
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-neon"></i>
+                        <span class="text-neon font-bold text-sm">Activo</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer px-5 py-3 rounded-xl
+                                  border border-orange-500/20 bg-orange-500/[0.04] transition-all duration-200
+                                  hover:border-orange-500/40">
+                        <input type="radio" name="IsActive" value="false" class="w-4 h-4 accent-orange-500" />
+                        <i data-lucide="pause-circle" class="w-4 h-4 text-orange-400"></i>
+                        <span class="text-orange-400 font-bold text-sm">Inactivo</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex gap-4 mt-7 flex-wrap">
+                <button type="submit"
+                        class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+                               px-6 py-3 rounded-xl bg-gradient-to-r from-neon to-neon-dark text-game-bg border-0
+                               shadow-[0_4px_24px_rgba(0,255,135,0.3)] cursor-pointer transition-all duration-200
+                               hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(0,255,135,0.45)]">
+                    <i data-lucide="save" class="w-4 h-4"></i>
+                    Guardar Evento
+                </button>
+                <a asp-action="Index"
+                   class="inline-flex items-center gap-2 font-orbitron font-bold text-[0.7rem] tracking-widest
+                          px-6 py-3 rounded-xl border border-game-violet/40 text-game-violet no-underline
+                          transition-all duration-200 hover:bg-game-purple/15 hover:-translate-y-0.5">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
