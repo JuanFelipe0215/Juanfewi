@@ -34,7 +34,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Event}/{action=Index}/{id?}")
+    pattern: "{controller=Event}/{action=Landing}/{id?}")
     .WithStaticAssets();
 
 
