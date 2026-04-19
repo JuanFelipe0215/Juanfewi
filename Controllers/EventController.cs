@@ -14,6 +14,13 @@ public class EventController : Controller
         _context = context;
     }
 
+
+    public IActionResult Landing()
+    {
+        var events = _context.Events.ToList();
+        return View(events);
+    }
+
     public IActionResult Index()
     {
         var events = _context.Events.ToList(); 
@@ -26,6 +33,7 @@ public class EventController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Store(Event events)
     {
         var eventDB = _context.Events.Add(events);
@@ -46,6 +54,7 @@ public class EventController : Controller
     }
     
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Update(Event events)
     {
         _context.Events.Update(events);
